@@ -1,0 +1,19 @@
+---
+- name: Create TOMCAT group and user
+  hosts: server.com
+  become: true
+  tasks:
+    - name: Create tomcatgp
+      group:
+        name: tomcatgp 
+        state: present 
+        gid: 2030 
+    - name: Create users
+      user:
+          name: tomcat 
+          comment: TOMCAT USER 
+          createhome: yes 
+          uid: 1050 
+          password: tomcat
+          group: tomcatgp 
+          state: present

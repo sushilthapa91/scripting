@@ -1,0 +1,16 @@
+---
+- name: Change Dhcp to StaticIP
+  hosts: server.com
+  become: true 
+  tasks: 
+    - name: modify ip  
+      lineinfile: 
+         path: /etc/sysconfig/network-scripts/ifcfg-Wired_connection_1
+         regexp: '^BOOTPROTO='
+         line: BOOTPROTO=static
+    - name: Insertstatic IP line
+      blockinfile:
+         path: /etc/sysconfig/network-scripts/ifcfg-Wired_connection_1
+         block: |
+            IPADDR=192.168.0.83
+            NETMASK=255.255.255.0

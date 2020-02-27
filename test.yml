@@ -1,0 +1,21 @@
+---
+- name: Create testgp with several users
+  hosts: server.com
+  become: true
+  tasks:
+    - name: Create testgp
+      group:
+        name: testgp
+        state: present
+    - name: Create users
+      user:
+          name: "{{ item }}"
+          comment: Test users
+          createhome: yes
+          groups: testgp
+          state: present
+      with_items:
+       -  test1
+       -  test2
+       -  test3
+       

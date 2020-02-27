@@ -1,0 +1,45 @@
+
+---
+ - hosts: 192.168.3.104
+   become: true
+   tasks:
+    - name: install epel
+      yum: name=epel-release state=present
+    - name: install java
+      yum: name=java-1.8.0-openjdk state=present
+    - name: install jenkins repo
+      get_url:
+        url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+    - name: key imort
+      rpm_key:
+       state: present
+       key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+    - name: install jenkins
+      yum: name=jenkins state=present
+    - name: jenkins restart
+      service: name=jenkins state=started
+    - name: enable jenkins
+      service:
+        name: jenkins
+        enabled: yes
+    - name: openport
+      shell: "{{ item }}"
+      loop:
+      - firewall-cmd --permanent --add-port=8080/tcp
+      - firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+   -firewall-cmd --permanent --add-port=8080/tcp
+   -firewall-cmd --reload

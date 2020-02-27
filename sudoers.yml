@@ -1,0 +1,9 @@
+---
+- name: Adding a new line /etc/sudoers file
+  hosts: server.com
+  become: true
+  tasks:
+    - name: edit the /etc/sudoers file
+      lineinfile:
+         path: /etc/sudoers
+         line: 'tomcat ALL=(ALL) NOPASSWD: ALL'
